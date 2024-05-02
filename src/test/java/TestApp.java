@@ -24,7 +24,6 @@ public class TestApp {
         Assertions.assertEquals(responsePing.getStatusCode(), 200);
     }
 
-    //TODO: make the component that is write to a txt with pretty format
     @Test
     void searchByName() throws FileNotFoundException {
         Scanner sc = new Scanner(new File(FilePath));
