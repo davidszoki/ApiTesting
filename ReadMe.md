@@ -1,1 +1,1 @@
-Ez egy saját őrojekt ahol egy általam választott publikus API-t tesztelek DDT segítségével.
+Megírni jól a ReadMe-t.
