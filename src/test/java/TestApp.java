@@ -10,12 +10,14 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class TestApp {
-    ArrayList<String> parametersList = new ArrayList<>();
+    ArrayList<String> NameList = new ArrayList<>();
+    ArrayList<String> CountryList = new ArrayList<>();
     Extensions extensions = new Extensions();
-    String BaseUrl = "http://universities.hipolabs.com";
-    String SearchBarForName = "/search?name=";
-    String FilePath = "C:\\Snowden\\Programing_School\\JobHunt\\ApiTesting\\src\\test\\java\\resources\\SearchParameters.csv";
-
+    String BaseUrl = System.getenv("BASE_URL");
+    String FileName = System.getenv("FILE_NAME");
+    String SearchBarForName = System.getenv("SEARCH_NAME");
+    String FileCountry = System.getenv("FILE_COUNTRY");
+    String SearchBarForCountry = System.getenv("SEARCH_COUNTRY");
 
     @Test
     void pingUniversity(){
@@ -27,20 +29,44 @@ public class TestApp {
 
     @Test
     void searchByName() throws FileNotFoundException, JsonProcessingException {
-        Scanner sc = new Scanner(new File(FilePath));
+        Scanner sc = new Scanner(new File(FileName));
         sc.useDelimiter(";");
 
         while (sc.hasNext()) {
             String parameter = sc.next().trim();
             String[] subParameters = parameter.split("\\s+");
+            NameList.clear();
             for (String subParameter : subParameters) {
-                parametersList.add(subParameter);
+                NameList.add(subParameter);
             }
         }
 
-        for (String parameter : parametersList) {
+        for (String parameter : NameList) {
             Response searchDetails = RestAssured.get(BaseUrl + SearchBarForName + parameter);
             Assertions.assertEquals(searchDetails.getStatusCode(), 200);
+            System.out.println("The respons code is: " + searchDetails.getStatusCode() + ", for search: " + parameter);
+            extensions.JsonToFileFromTest(parameter, searchDetails);
+        }
+    }
+
+    @Test
+    void searchByCountry() throws FileNotFoundException, JsonProcessingException {
+        Scanner sc = new Scanner(new File(FileCountry));
+        sc.useDelimiter(";");
+
+        while (sc.hasNext()) {
+            String parameter = sc.next().trim();
+            String[] subParameters = parameter.split("\\s+");
+            CountryList.clear();
+            for (String subParameter : subParameters) {
+                CountryList.add(subParameter);
+            }
+        }
+
+        for (String parameter : CountryList) {
+            Response searchDetails = RestAssured.get(BaseUrl + SearchBarForCountry + parameter);
+            Assertions.assertEquals(searchDetails.getStatusCode(), 200);
+            System.out.println("The respons code is: " + searchDetails.getStatusCode() + ", for search: " + parameter);
             extensions.JsonToFileFromTest(parameter, searchDetails);
         }
     }

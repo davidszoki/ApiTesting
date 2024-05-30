@@ -8,6 +8,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class Extensions {
+    String filePath = "C:\\Snowden\\Programing_School\\JobHunt\\ApiTesting\\src\\test\\java\\Result\\";
+
     public void JsonToFileFromTest(String fileName, Response json) throws JsonProcessingException {
         String text = PrettyJsonFormatter(json);
         WriteFile(fileName, text);
@@ -25,12 +27,12 @@ public class Extensions {
         return prettyJson;
     }
 
-    private void WriteFile(String fileName, String text){
-        try{
-            FileWriter myFile = new FileWriter("C:\\Snowden\\Programing_School\\JobHunt\\ApiTesting\\src\\test\\java\\Result\\"+fileName);
+    private void WriteFile(String fileName, String text) {
+        try {
+            FileWriter myFile = new FileWriter(filePath+fileName);
             myFile.write(text);
             myFile.close();
-        }catch (IOException e){
+        } catch (IOException e){
             System.out.println("An error accured.");
             e.printStackTrace();
         }
