@@ -31,7 +31,7 @@ public class Extensions {
             myFile.write(text);
             myFile.close();
         } catch (IOException e){
-            System.out.println("An error accured.");
+            System.out.println("Something went wrong! See below for more information.");
             e.printStackTrace();
         }
     }

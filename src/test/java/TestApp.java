@@ -9,19 +9,18 @@ import java.io.FileReader;
 import java.io.IOException;
 
 public class TestApp {
-    String BaseUrl = System.getenv("BASE_URL");
-    String FileName = System.getenv("FILE_NAME");
-    String SearchBarForName = System.getenv("SEARCH_NAME");
-    String FileCountry = System.getenv("FILE_COUNTRY");
-    String SearchBarForCountry = System.getenv("SEARCH_COUNTRY");
-    String FilePath = System.getenv("FILE_PATH");
-    Extensions extensions;
+    String BaseUrl = "http://universities.hipolabs.com";
+    String FileName = "C:\\Snowden\\Programing_School\\JobHunt\\ApiTesting\\src\\test\\java\\resources\\Names.csv";
+    String SearchBarForName = "/search?country=";
+    String FileCountry = "C:\\Snowden\\Programing_School\\JobHunt\\ApiTesting\\src\\test\\java\\resources\\Country.csv";
+    String SearchBarForCountry = "/search?country=";
+    String FilePath = "C:\\Snowden\\Programing_School\\JobHunt\\ApiTesting\\src\\test\\java\\Result\\";
+    Extensions extensions = new Extensions();
 
     @Test
-    void pingUniversity(){
+    void pingUniversity() {
         Response responsePing = RestAssured.get(BaseUrl);
         responsePing.print();
-
         Assertions.assertEquals(responsePing.getStatusCode(), 200);
     }
 
@@ -30,12 +29,13 @@ public class TestApp {
         FileReader fileReader = new FileReader(FileName);
         CSVReader csvReader = new CSVReader(fileReader);
         String[] nextRecord;
+
         while ((nextRecord = csvReader.readNext()) != null){
             for (String parameter : nextRecord) {
                 Response searchDetails = RestAssured.get(BaseUrl + SearchBarForName + parameter);
                 Assertions.assertEquals(searchDetails.getStatusCode(), 200);
                 System.out.println("The respons code is: " + searchDetails.getStatusCode() + ", for search: " + parameter);
-                extensions.JsonToFileFromTest(FilePath+parameter, searchDetails);
+                extensions.JsonToFileFromTest(FilePath + parameter, searchDetails);
             }
         }
     }
@@ -46,12 +46,12 @@ public class TestApp {
         CSVReader csvReader = new CSVReader(fileReader);
         String[] nextRecord;
 
-        while ((nextRecord = csvReader.readNext()) != null){
+        while ((nextRecord = csvReader.readNext()) != null) {
             for (String parameter : nextRecord) {
-                Response searchDetails = RestAssured.get(BaseUrl + SearchBarForCountry + parameter);
+                Response searchDetails = RestAssured.get(BaseUrl+SearchBarForCountry+parameter);
                 Assertions.assertEquals(searchDetails.getStatusCode(), 200);
                 System.out.println("The respons code is: " + searchDetails.getStatusCode() + ", for search: " + parameter);
-                extensions.JsonToFileFromTest(FilePath+parameter, searchDetails);
+                extensions.JsonToFileFromTest(FilePath + parameter, searchDetails);
             }
         }
     }
