@@ -7,14 +7,18 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class TestApp {
+    String currentDirectory = System.getProperty("user.dir");
+    Path projectPath = Paths.get(currentDirectory);
     String BaseUrl = "http://universities.hipolabs.com";
-    String FileName = "C:\\Snowden\\Programing_School\\JobHunt\\ApiTesting\\src\\test\\java\\resources\\Names.csv";
-    String SearchBarForName = "/search?country=";
-    String FileCountry = "C:\\Snowden\\Programing_School\\JobHunt\\ApiTesting\\src\\test\\java\\resources\\Country.csv";
+    String FileName = projectPath.toAbsolutePath()+"\\src\\test\\java\\resources\\Names.csv";
+    String SearchBarForName = "/search?name=";
+    String FileCountry = projectPath.toAbsolutePath()+"\\src\\test\\java\\resources\\Country.csv";
     String SearchBarForCountry = "/search?country=";
-    String FilePath = "C:\\Snowden\\Programing_School\\JobHunt\\ApiTesting\\src\\test\\java\\Result\\";
+    String FilePath = projectPath.toAbsolutePath()+"\\src\\test\\java\\Result\\";
     Extensions extensions = new Extensions();
 
     @Test
