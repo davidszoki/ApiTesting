@@ -42,6 +42,8 @@ public class TestApp {
                 extensions.JsonToFileFromTest(FilePath + parameter, searchDetails);
             }
         }
+
+        csvReader.close();
     }
 
     @Test
@@ -58,5 +60,7 @@ public class TestApp {
                 extensions.JsonToFileFromTest(FilePath + parameter, searchDetails);
             }
         }
+
+        csvReader.close();
     }
 }
